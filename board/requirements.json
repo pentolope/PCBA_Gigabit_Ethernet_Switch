@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "repo": "PCBA_Gigabit_Ethernet_Switch",
+  "board_id": "gigabit_ethernet_switch",
+  "benchmark_id": 26,
+  "title": "Five-Port Gigabit Ethernet Switch",
+  "description": "The split between what BRIEF.md fixes and what it leaves open. Every fixed_requirements entry carries the verbatim brief text that substantiates it, bound to the recorded brief digest. An open_decisions entry is a choice for the design agent: record it in 'chosen' with 'rationale', and never move it into fixed_requirements. Missing details are design freedom, not permission to fabricate unstated user requirements.",
+  "brief": {
+    "path": "../BRIEF.md",
+    "sha256": "b28f5cff7f166379930dd38d7c264a32ff1c70ad964a03e870eeecbba56a0d39",
+    "authority": "supplied by the benchmark; authoritative; preserved byte for byte and never edited"
+  },
+  "metadata": {
+    "category": "high-speed-networking",
+    "difficulty": 5,
+    "detail": 3,
+    "layers": "6",
+    "stressors": [
+      "many Ethernet differential pairs",
+      "BGA/QFN escape",
+      "multiple supplies",
+      "magnetics placement"
+    ]
+  },
+  "derivation": {
+    "method": "BRIEF.md was read and split; no design decision was taken. Every fixed_requirements entry, and every spec-table row sourced from the brief, carries a quotation that was checked by literal substring match against the brief bytes digested above. The build refuses to emit this file if any quotation is not found.",
+    "quotations_verified": 23,
+    "review": "two rounds of adversarial review against the brief, looking for invented requirements, lost requirements, evidence supporting a weaker claim than the one made beside it, and worksheet questions that presuppose their own answer"
+  },
+  "fixed_requirements": [
+    {
+      "id": "REQ-01",
+      "requirement": "The board is an Ethernet switch with five 1000BASE-T ports.",
+      "brief_evidence": "five-port 1000BASE-T Ethernet switch PCB using an integrated switch IC"
+    },
+    {
+      "id": "REQ-02",
+      "requirement": "The switching function is realised in an integrated switch IC rather than a discrete implementation; the brief does not say how much that IC integrates, including whether the port PHYs are on-chip.",
+      "brief_evidence": "using an integrated switch IC plus the required magnetics/connectors"
+    },
+    {
+      "id": "REQ-03",
+      "requirement": "The magnetics and port connectors required by the ports are part of this board's scope.",
+      "brief_evidence": "Create a compact five-port 1000BASE-T Ethernet switch PCB using an integrated switch IC plus the required magnetics/connectors."
+    },
+    {
+      "id": "REQ-04",
+      "requirement": "The board must be compact.",
+      "brief_evidence": "Create a compact five-port 1000BASE-T Ethernet switch PCB using an integrated switch IC plus the required magnetics/connectors."
+    },
+    {
+      "id": "REQ-05",
+      "requirement": "Management access must be provided, either through a small MCU on the board or through a header.",
+      "brief_evidence": "Include management access through a small MCU or header"
+    },
+    {
+      "id": "REQ-06",
+      "requirement": "Clocks must be provided on the board.",
+      "brief_evidence": "Include management access through a small MCU or header, clocks, EEPROM/flash if needed"
+    },
+    {
+      "id": "REQ-07",
+      "requirement": "EEPROM/flash must be included if the chosen architecture needs it; the brief makes this conditional rather than unconditional.",
+      "brief_evidence": "Include management access through a small MCU or header, clocks, EEPROM/flash if needed, and all power rails."
+    },
+    {
+      "id": "REQ-08",
+      "requirement": "All the power rails the design needs must be included on this board; the brief states no board input, rail count, voltages or currents, and does not say which rails are generated on-board versus supplied to it.",
+      "brief_evidence": "Include management access through a small MCU or header, clocks, EEPROM/flash if needed, and all power rails."
+    },
+    {
+      "id": "REQ-09",
+      "requirement": "Board size must be chosen so that placement is genuinely constrained; the differential pairs must not be given unlimited space.",
+      "brief_evidence": "Aim for a board size that forces careful placement rather than giving the differential pairs unlimited space."
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "The switch vendor's reference layout must be followed.",
+      "brief_evidence": "Follow the switch vendor's reference layout and PHY supply recommendations."
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "The vendor's PHY supply recommendations must be followed.",
+      "brief_evidence": "Follow the switch vendor's reference layout and PHY supply recommendations."
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Where the brief is silent, the design agent must make and document reasonable engineering decisions instead of inventing user requirements that were never stated.",
+      "brief_evidence": "where the brief leaves choices open, make and document reasonable engineering decisions rather than inventing hidden user requirements"
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "This repository stays a consumer of the shared PCBA_AutoDesignAndTest toolkit; board-specific logic must not be pushed into the toolkit.",
+      "brief_evidence": "The repository should remain a consumer of the shared `PCBA_AutoDesignAndTest` toolkit rather than accumulating board-specific logic in the toolkit."
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "The requirements the brief does state are authoritative: they govern the design and are not to be reinterpreted, weakened or traded away against the agent's own preferences.",
+      "brief_evidence": "Treat stated requirements as authoritative; where the brief leaves choices open, make and document reasonable engineering decisions"
+    }
+  ],
+  "open_decisions": [
+    {
+      "id": "OPEN-01",
+      "decision": "Which integrated switch IC is used - vendor, device, port configuration, integration level (integrated PHYs versus external), and package type.",
+      "why_open": "The brief requires 'an integrated switch IC' and names no vendor, part or package, and does not say whether the PHYs sit inside that IC. Because the stressor list calls out BGA/QFN escape, the package choice is a real decision with routing consequences, not a detail.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-02",
+      "decision": "Whether management access is implemented as an on-board MCU or as a header, and if an MCU, which device and what it is responsible for.",
+      "why_open": "The brief explicitly offers 'a small MCU or header' as alternatives and does not choose between them, name a device, or say what management functions must be reachable.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-03",
+      "decision": "The management bus and its off-board interface: which interface the switch is managed over, its pinout, voltage levels and whether it is exposed off-board at all.",
+      "why_open": "The brief requires management access but is silent on the protocol, on how the interface is presented, and on whether it is for production configuration, field access, or bring-up only.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-04",
+      "decision": "Whether EEPROM/flash is populated at all, and if so its type, interface, size and how it is loaded.",
+      "why_open": "The brief says 'if needed', making this conditional on the switch IC's boot and configuration model, which cannot be known until OPEN-01 is settled.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-05",
+      "decision": "Clock architecture: crystal versus oscillator, frequency, accuracy and stability grade, how many sources, and how clocks are distributed to the switch and any MCU.",
+      "why_open": "The brief lists 'clocks' as a required block and states nothing about frequency, source type, tolerance or distribution.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-06",
+      "decision": "Power architecture: board input voltage and how power enters the board, the number of rails, their voltages and current budgets, regulator topology per rail, and any sequencing or ramp requirements.",
+      "why_open": "The brief requires 'all power rails' but states no input, no rail count, no voltages and no currents, and says nothing about sequencing. These are consequences of the chosen switch IC and its supply recommendations, not stated requirements.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-07",
+      "decision": "Board outline, exact dimensions, aspect ratio, mounting-hole pattern and keepouts.",
+      "why_open": "The brief gives only a qualitative size posture ('compact', tight enough to constrain placement) and no dimensions, mechanical envelope or enclosure.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-08",
+      "decision": "Stackup detail: whether the layer count is in fact six, the layer ordering and reference-plane assignment, dielectric materials and thicknesses, and copper weights.",
+      "why_open": "Six layers is the metadata's 'likely' figure, not a requirement in the brief. The stackup must be justified by the escape and impedance needs of the chosen package.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-09",
+      "decision": "Differential-pair rules: the impedance target and its basis, intra-pair skew and inter-pair length budgets, spacing to other nets, and via count limits per pair.",
+      "why_open": "The brief states no electrical routing numbers at all; these must come from the standard and the vendor's layout guidance once the IC is chosen.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-10",
+      "decision": "Magnetics implementation: discrete magnetics modules versus connectors with integrated magnetics, and single versus ganged port housings.",
+      "why_open": "The brief requires 'the required magnetics/connectors' without specifying packaging. The metadata names magnetics placement as a stressor, so this choice drives the layout.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-11",
+      "decision": "Port-side termination and chassis-ground strategy: whether a common-mode termination network is fitted and in what arrangement, whether an isolation gap or moat is drawn, and how the connector shields are handled.",
+      "why_open": "The brief is silent on the port boundary treatment beyond requiring magnetics; nothing in it fixes a termination network or a grounding scheme.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-12",
+      "decision": "Protection strategy for the port pins and any exposed management interface against ESD and cable-borne transients.",
+      "why_open": "The brief does not mention protection at all. Any protection is an engineering decision to be justified, not a requirement the brief imposes.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-13",
+      "decision": "Package escape strategy: fan-out pattern, via technology (through-hole versus blind/buried versus via-in-pad), the pad and clearance geometry the chosen package demands, and the resulting fabrication class.",
+      "why_open": "The brief is silent; the escape approach falls out of the package chosen in OPEN-01 and directly determines whether the layer count and fab capability are sufficient.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-14",
+      "decision": "Link and activity indication: whether LEDs are fitted, how many per port, and how they are driven.",
+      "why_open": "The brief never mentions indicators. Adding them is allowed as an engineering choice but must not be recorded as a user requirement.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-15",
+      "decision": "Thermal strategy for the switch IC: copper area, thermal vias, whatever thermal land or pad the chosen package presents, and whether any airflow assumption is made.",
+      "why_open": "The brief specifies neither an environment nor a power budget, but pairs an integrated switch IC with a deliberately compact board, so the thermal path must be reasoned about and stated.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-16",
+      "decision": "Bring-up and test provisioning: test points, programming or debug access, and how each rail and the management path is probed.",
+      "why_open": "The brief says nothing about test access; the benchmark's test flow makes this a decision the design must record.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-17",
+      "decision": "Which vendor reference layout is treated as authoritative, and how any deviation from it is recorded and justified.",
+      "why_open": "The brief mandates following the vendor's reference layout but the applicable document is unknown until the IC is chosen, and the brief does not say how deviations are to be handled.",
+      "chosen": null,
+      "rationale": null
+    },
+    {
+      "id": "OPEN-18",
+      "decision": "Fabrication and assembly targets: vendor, process class, single- versus double-sided assembly, and surface finish.",
+      "why_open": "The brief names no fabricator or process constraints, yet the package escape and impedance control make the chosen capability set a binding constraint on the layout.",
+      "chosen": null,
+      "rationale": null
+    }
+  ]
+}
