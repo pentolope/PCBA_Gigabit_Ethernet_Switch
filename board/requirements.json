@@ -25,6 +25,7 @@
   "derivation": {
     "method": "BRIEF.md was read and split; no design decision was taken. Every fixed_requirements entry, and every spec-table row sourced from the brief, carries a quotation that was checked by literal substring match against the brief bytes digested above. The build refuses to emit this file if any quotation is not found.",
     "quotations_verified": 23,
+    "where_the_quotations_are": "Every one of them is in this file: fixed_requirements[].brief_evidence and brief_spec_rows[].brief_evidence. The count above is the sum of those two lists, so it is recomputable from this repository alone - re-read BRIEF.md and check each string is a substring of it. brief_spec_rows carries the quotations behind the README's spec table, which would otherwise cite the brief with the evidence left in a build script.",
     "review": "two rounds of adversarial review against the brief, looking for invented requirements, lost requirements, evidence supporting a weaker claim than the one made beside it, and worksheet questions that presuppose their own answer"
   },
   "fixed_requirements": [
@@ -97,6 +98,53 @@
       "id": "REQ-14",
       "requirement": "The requirements the brief does state are authoritative: they govern the design and are not to be reinterpreted, weakened or traded away against the agent's own preferences.",
       "brief_evidence": "Treat stated requirements as authoritative; where the brief leaves choices open, make and document reasonable engineering decisions"
+    }
+  ],
+  "brief_spec_rows": [
+    {
+      "aspect": "Port count and Ethernet standard",
+      "value": "Five ports, 1000BASE-T",
+      "brief_evidence": "five-port 1000BASE-T Ethernet switch PCB using an integrated switch IC"
+    },
+    {
+      "aspect": "Switching silicon",
+      "value": "An integrated switch IC; the brief names no vendor, device or package, and does not say how much is integrated into it",
+      "brief_evidence": "using an integrated switch IC plus the required magnetics/connectors"
+    },
+    {
+      "aspect": "Port front-end scope",
+      "value": "The required magnetics and connectors are in scope on this board",
+      "brief_evidence": "Create a compact five-port 1000BASE-T Ethernet switch PCB using an integrated switch IC plus the required magnetics/connectors."
+    },
+    {
+      "aspect": "Management access",
+      "value": "Present, via either a small MCU or a header; the brief accepts either",
+      "brief_evidence": "Include management access through a small MCU or header"
+    },
+    {
+      "aspect": "Clocking",
+      "value": "Clocks required on board; source, frequency, count and distribution not stated",
+      "brief_evidence": "Include management access through a small MCU or header, clocks, EEPROM/flash if needed"
+    },
+    {
+      "aspect": "Non-volatile configuration storage",
+      "value": "EEPROM/flash, conditional - required only if the chosen architecture needs it",
+      "brief_evidence": "Include management access through a small MCU or header, clocks, EEPROM/flash if needed, and all power rails."
+    },
+    {
+      "aspect": "Power rails",
+      "value": "All power rails are in this board's scope; the board input, rail count, voltages and currents are not stated",
+      "brief_evidence": "Include management access through a small MCU or header, clocks, EEPROM/flash if needed, and all power rails."
+    },
+    {
+      "aspect": "Board size posture",
+      "value": "Compact - deliberately tight enough to constrain differential-pair placement; no dimensions given",
+      "brief_evidence": "Aim for a board size that forces careful placement rather than giving the differential pairs unlimited space."
+    },
+    {
+      "aspect": "Layout authority",
+      "value": "The switch vendor's reference layout and PHY supply recommendations must be followed",
+      "brief_evidence": "Follow the switch vendor's reference layout and PHY supply recommendations."
     }
   ],
   "open_decisions": [
